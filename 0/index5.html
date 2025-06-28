@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abbreviation Table Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 30px;
+    }
+
+    h2, h3, h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 20px;
+      max-width: 700px;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 5px;
+      font-size: 16px;
+    }
+
+    .icon-btn:hover {
+      opacity: 0.7;
+    }
+
+    .edit-input {
+      width: 90%;
+      padding: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Abbreviation and Full Form Form</h2>
+
+  <div class="form-container">
+    <form id="abbrForm">
+      <div class="form-group">
+        <label for="abbr">Abbreviation:</label>
+        <input type="text" id="abbr" required />
+      </div>
+      <div class="form-group">
+        <label for="fullForm">Full Form:</label>
+        <input type="text" id="fullForm" required />
+      </div>
+      <button type="submit">Add to Table</button>
+    </form>
+  </div>
+
+  <div class="form-container" id="tableContainer" style="display: none;">
+    <h3>Abbreviation Table</h3>
+    <table id="abbrTable">
+      <thead>
+        <tr>
+          <th>Abbreviation</th>
+          <th>Full Form</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button id="insertIntoFinal">Insert into Final Table</button>
+  </div>
+
+  <div class="form-container">
+    <h1 style="color: #0074D9; font-size: 14px;">Definitions, Acronyms, and Abbreviations</h1>
+    <table border="1" id="finalTable">
+      <thead>
+        <tr style="background-color: #0074D9; color: #fff;">
+          <th>Acronyms</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr><td>SFDC</td><td>Salesforce.com</td></tr>
+        <tr><td>CRM</td><td>Customer Relationship Management</td></tr>
+        <tr><td>SRS</td><td>Software Requirement Specifications</td></tr>
+        <tr><td>UC</td><td>Use Case</td></tr> -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const abbrForm = document.getElementById('abbrForm');
+    const abbrInput = document.getElementById('abbr');
+    const fullFormInput = document.getElementById('fullForm');
+    const abbrTableBody = document.querySelector('#abbrTable tbody');
+    const tableContainer = document.getElementById('tableContainer');
+    const insertButton = document.getElementById('insertIntoFinal');
+    const finalTableBody = document.querySelector('#finalTable tbody');
+
+    abbrForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const abbr = abbrInput.value.trim();
+      const fullForm = fullFormInput.value.trim();
+
+      if (!abbr || !fullForm) {
+        alert('Please fill in both fields!');
+        return;
+      }
+
+      addRow(abbr, fullForm);
+      abbrInput.value = '';
+      fullFormInput.value = '';
+      tableContainer.style.display = 'block';
+    });
+
+    function addRow(abbr, fullForm) {
+      const row = document.createElement('tr');
+
+      const abbrCell = document.createElement('td');
+      abbrCell.textContent = abbr;
+
+      const fullFormCell = document.createElement('td');
+      fullFormCell.textContent = fullForm;
+
+      const actionCell = document.createElement('td');
+
+      const editBtn = document.createElement('button');
+      editBtn.innerHTML = '✏️';
+      editBtn.className = 'icon-btn';
+      editBtn.title = 'Edit';
+      editBtn.onclick = () => editRow(row);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.innerHTML = '🗑️';
+      deleteBtn.className = 'icon-btn';
+      deleteBtn.title = 'Delete';
+      deleteBtn.onclick = () => row.remove();
+
+      actionCell.appendChild(editBtn);
+      actionCell.appendChild(deleteBtn);
+
+      row.appendChild(abbrCell);
+      row.appendChild(fullFormCell);
+      row.appendChild(actionCell);
+
+      abbrTableBody.appendChild(row);
+    }
+
+    function editRow(row) {
+      const abbrCell = row.children[0];
+      const fullFormCell = row.children[1];
+      const actionsCell = row.children[2];
+
+      const abbrText = abbrCell.textContent;
+      const fullFormText = fullFormCell.textContent;
+
+      abbrCell.innerHTML = `<input class="edit-input" type="text" value="${abbrText}">`;
+      fullFormCell.innerHTML = `<input class="edit-input" type="text" value="${fullFormText}">`;
+
+      actionsCell.innerHTML = '';
+
+      const saveBtn = document.createElement('button');
+      saveBtn.innerHTML = '💾';
+      saveBtn.className = 'icon-btn';
+      saveBtn.title = 'Save';
+      saveBtn.onclick = () => {
+        const newAbbr = abbrCell.querySelector('input').value.trim();
+        const newFullForm = fullFormCell.querySelector('input').value.trim();
+
+        if (!newAbbr || !newFullForm) {
+          alert('Fields cannot be empty.');
+          return;
+        }
+
+        abbrCell.textContent = newAbbr;
+        fullFormCell.textContent = newFullForm;
+
+        actionsCell.innerHTML = '';
+        const editBtn = document.createElement('button');
+        editBtn.innerHTML = '✏️';
+        editBtn.className = 'icon-btn';
+        editBtn.title = 'Edit';
+        editBtn.onclick = () => editRow(row);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '🗑️';
+        deleteBtn.className = 'icon-btn';
+        deleteBtn.title = 'Delete';
+        deleteBtn.onclick = () => row.remove();
+
+        actionsCell.appendChild(editBtn);
+        actionsCell.appendChild(deleteBtn);
+      };
+
+      actionsCell.appendChild(saveBtn);
+    }
+
+    insertButton.addEventListener('click', () => {
+      const rows = abbrTableBody.querySelectorAll('tr');
+      rows.forEach(row => {
+        const abbr = row.children[0].textContent;
+        const fullForm = row.children[1].textContent;
+
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `<td>${abbr}</td><td>${fullForm}</td>`;
+        finalTableBody.appendChild(newRow);
+      });
+
+      abbrTableBody.innerHTML = '';
+      tableContainer.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
