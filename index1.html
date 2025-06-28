@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="transition-colors duration-300">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Overview Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white min-h-screen p-6">
+  <nav class="bg-white dark:bg-gray-800 shadow-md mb-8">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <img src="/logo.png" alt="Logo" class="h-8 w-auto" />
+      </div>
+      <div class="flex space-x-6 font-semibold text-sm uppercase">
+        <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400">Home</a>
+        <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400">About Us</a>
+        <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400">Business Overview</a>
+        <a href="index2.html" class="hover:text-blue-600 dark:hover:text-blue-400">Use Case Table</a>
+        <a href="/LastPast/index_8.html" class="hover:text-blue-600 dark:hover:text-blue-400">Last Page</a>
+        <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400">Contact Us</a>
+      </div>
+      <button id="toggleDark" class="ml-6 bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded text-sm">Toggle Dark Mode</button>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-xl p-8">
+    <h1 class="text-2xl font-bold text-center mb-6">Business Overview Form</h1>
+    <form id="businessForm" class="space-y-6">
+      <div>
+        <label class="block font-semibold mb-2">Purpose:</label>
+        <textarea name="purpose" rows="3" required class="w-full p-3 border rounded-md dark:bg-gray-700"></textarea>
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-2">Current State of the Business:</label>
+        <textarea name="currentState" rows="3" required class="w-full p-3 border rounded-md dark:bg-gray-700"></textarea>
+      </div>
+
+      <div id="challenges" class="pointer-section">
+        <label class="block font-semibold mb-2">Challenges:</label>
+        <button type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded mb-2" onclick="addPointer('challenges')">+ Add Point</button>
+      </div>
+
+      <div id="focusOn" class="pointer-section">
+        <label class="block font-semibold mb-2">Focus On:</label>
+        <button type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded mb-2" onclick="addPointer('focusOn')">+ Add Point</button>
+      </div>
+
+      <div id="futureState" class="pointer-section">
+        <label class="block font-semibold mb-2">Future State of the Business:</label>
+        <button type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded mb-2" onclick="addPointer('futureState')">+ Add Point</button>
+      </div>
+
+      <div id="tools" class="pointer-section">
+        <label class="block font-semibold mb-2">Tools and Technology:</label>
+        <button type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded mb-2" onclick="addPointer('tools')">+ Add Point</button>
+      </div>
+
+      <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded "><a href="index2.html">Next Page</a></button>
+    </form>
+  </main>
+
+  <script>
+    const pointerSections = ['challenges', 'focusOn', 'futureState', 'tools'];
+
+    function addPointer(sectionId) {
+      const container = document.getElementById(sectionId);
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Enter a point...';
+      input.className = 'w-full p-2 mb-2 border rounded dark:bg-gray-700';
+      container.appendChild(input);
+    }
+
+    function saveFormToStorage() {
+      const formData = {
+        purpose: document.querySelector('[name="purpose"]').value,
+        currentState: document.querySelector('[name="currentState"]').value,
+        challenges: getPointers('challenges'),
+        focusOn: getPointers('focusOn'),
+        futureState: getPointers('futureState'),
+        tools: getPointers('tools')
+      };
+      localStorage.setItem('businessOverviewForm', JSON.stringify(formData));
+    }
+
+    function loadFormFromStorage() {
+      const saved = JSON.parse(localStorage.getItem('businessOverviewForm'));
+      if (!saved) return;
+      document.querySelector('[name="purpose"]').value = saved.purpose;
+      document.querySelector('[name="currentState"]').value = saved.currentState;
+      pointerSections.forEach(section => {
+        document.getElementById(section).querySelectorAll('input').forEach(el => el.remove());
+        saved[section].forEach(point => {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = point;
+          input.className = 'w-full p-2 mb-2 border rounded dark:bg-gray-700';
+          document.getElementById(section).appendChild(input);
+        });
+      });
+    }
+
+    function getPointers(id) {
+      const inputs = Array.from(document.getElementById(id).querySelectorAll('input'));
+      return inputs.map(input => input.value.trim()).filter(val => val.length > 0);
+    }
+
+    document.getElementById('businessForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      saveFormToStorage();
+
+      const purpose = this.purpose.value.trim();
+      const currentState = this.currentState.value.trim();
+
+      const data = 
+`Purpose:
+${purpose}
+
+Current State of the Business:
+${currentState}
+
+Challenges:
+- ${getPointers('challenges').join('\n- ')}
+
+Focus On:
+- ${getPointers('focusOn').join('\n- ')}
+
+Future State of the Business:
+- ${getPointers('futureState').join('\n- ')}
+
+Tools and Technology:
+- ${getPointers('tools').join('\n- ')}`;
+
+      const blob = new Blob([data], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'business_overview.txt';
+      link.click();
+    });
+
+    document.getElementById('toggleDark').addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    window.onload = () => {
+      pointerSections.forEach(section => addPointer(section));
+      loadFormFromStorage();
+    };
+  </script>
+</body>
+</html>
