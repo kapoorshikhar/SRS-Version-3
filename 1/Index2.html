@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Business Overview Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    textarea, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+    .pointer-section {
+      margin-bottom: 20px;
+    }
+    .pointer-section input {
+      width: 90%;
+      margin-bottom: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    .add-btn {
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Business Overview Form</h1>
+  <form id="businessForm">
+    <label>Purpose:</label>
+    <textarea name="purpose" rows="3" required></textarea>
+
+    <label>Current State of the Business:</label>
+    <textarea name="currentState" rows="3" required></textarea>
+
+    <div class="pointer-section" id="challenges">
+      <label>Challenges:</label>
+      <button type="button" class="add-btn" onclick="addPointer('challenges')">+ Add Point</button>
+    </div>
+
+    <div class="pointer-section" id="focusOn">
+      <label>Focus On:</label>
+      <button type="button" class="add-btn" onclick="addPointer('focusOn')">+ Add Point</button>
+    </div>
+
+    <div class="pointer-section" id="futureState">
+      <label>Future State of the Business:</label>
+      <button type="button" class="add-btn" onclick="addPointer('futureState')">+ Add Point</button>
+    </div>
+
+    <div class="pointer-section" id="tools">
+      <label>Tools and Technology:</label>
+      <button type="button" class="add-btn" onclick="addPointer('tools')">+ Add Point</button>
+    </div>
+
+    <button type="submit">Download as Text File</button>
+  </form>
+
+  <script>
+    const pointerSections = ['challenges', 'focusOn', 'futureState', 'tools'];
+
+    function addPointer(sectionId) {
+      const container = document.getElementById(sectionId);
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Enter a point...';
+      container.appendChild(input);
+    }
+
+    document.getElementById('businessForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const purpose = this.purpose.value.trim();
+      const currentState = this.currentState.value.trim();
+
+      const getPointers = (id) => {
+        const inputs = Array.from(document.getElementById(id).querySelectorAll('input'));
+        return inputs.map(input => input.value.trim()).filter(val => val.length > 0);
+      };
+
+      const data = 
+`Purpose:
+${purpose}
+
+Current State of the Business:
+${currentState}
+
+Challenges:
+- ${getPointers('challenges').join('\n- ')}
+
+Focus On:
+- ${getPointers('focusOn').join('\n- ')}
+
+Future State of the Business:
+- ${getPointers('futureState').join('\n- ')}
+
+Tools and Technology:
+- ${getPointers('tools').join('\n- ')}`;
+
+      const blob = new Blob([data], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'business_overview.txt';
+      link.click();
+    });
+
+    // Initialize with one input each
+    pointerSections.forEach(section => addPointer(section));
+  </script>
+</body>
+</html>

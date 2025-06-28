@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Business Overview Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f7f9fc;
+      padding: 30px;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px 40px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #333;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 20px;
+      display: block;
+      color: #444;
+    }
+
+    textarea, input {
+      width: 100%;
+      padding: 10px 14px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .pointer-section {
+      margin-bottom: 20px;
+    }
+
+    .pointer-section input {
+      margin-bottom: 10px;
+    }
+
+    .add-btn {
+      background-color: #eef2f7;
+      border: none;
+      padding: 6px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 6px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .add-btn:hover {
+      background-color: #d9e0eb;
+    }
+
+    button[type="submit"] {
+      background-color: #4f46e5;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #4338ca;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Business Overview Form</h1>
+    <form id="businessForm">
+      <label>Purpose:</label>
+      <textarea name="purpose" rows="3" required></textarea>
+
+      <label>Current State of the Business:</label>
+      <textarea name="currentState" rows="3" required></textarea>
+
+      <div class="pointer-section" id="challenges">
+        <label>Challenges:</label>
+        <button type="button" class="add-btn" onclick="addPointer('challenges')">+ Add Point</button>
+      </div>
+
+      <div class="pointer-section" id="focusOn">
+        <label>Focus On:</label>
+        <button type="button" class="add-btn" onclick="addPointer('focusOn')">+ Add Point</button>
+      </div>
+
+      <div class="pointer-section" id="futureState">
+        <label>Future State of the Business:</label>
+        <button type="button" class="add-btn" onclick="addPointer('futureState')">+ Add Point</button>
+      </div>
+
+      <div class="pointer-section" id="tools">
+        <label>Tools and Technology:</label>
+        <button type="button" class="add-btn" onclick="addPointer('tools')">+ Add Point</button>
+      </div>
+
+      <button type="submit">Download as Text File</button>
+    </form>
+  </div>
+
+  <script>
+    const pointerSections = ['challenges', 'focusOn', 'futureState', 'tools'];
+
+    
+function addPointer(sectionId) {
+  const container = document.getElementById(sectionId);
+  const wrapper = document.createElement('div');
+  wrapper.style.display = 'flex';
+  wrapper.style.alignItems = 'center';
+  wrapper.style.gap = '8px';
+  wrapper.style.marginBottom = '10px';
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = 'Enter a point...';
+  input.style.flex = '1';
+
+  const delBtn = document.createElement('button');
+  delBtn.textContent = '❌';
+  delBtn.type = 'button';
+  delBtn.style.border = 'none';
+  delBtn.style.background = 'transparent';
+  delBtn.style.cursor = 'pointer';
+  delBtn.onclick = () => container.removeChild(wrapper);
+
+  wrapper.appendChild(input);
+  wrapper.appendChild(delBtn);
+  container.appendChild(wrapper);
+}
+
+    document.getElementById('businessForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const purpose = this.purpose.value.trim();
+      const currentState = this.currentState.value.trim();
+
+      const getPointers = (id) => {
+        const inputs = Array.from(document.getElementById(id).querySelectorAll('input'));
+        return inputs.map(input => input.value.trim()).filter(val => val.length > 0);
+      };
+
+      const data = 
+`Purpose:
+${purpose}
+
+Current State of the Business:
+${currentState}
+
+Challenges:
+- ${getPointers('challenges').join('\n- ')}
+
+Focus On:
+- ${getPointers('focusOn').join('\n ')}
+
+Future State of the Business:
+- ${getPointers('futureState').join('\n- ')}
+
+Tools and Technology:
+- ${getPointers('tools').join('\n- ')}`;
+
+      const blob = new Blob([data], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'business_overview.txt';
+      link.click();
+    });
+
+    // Initialize one field for each pointer section
+    pointerSections.forEach(section => addPointer(section));
+  </script>
+</body>
+</html>
+
+
+
+
