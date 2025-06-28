@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Use Case Table Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #f9f9f9, #e6ecf0);
+      margin: 0;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      max-width: 700px;
+      background-color: #ffffff;
+      padding: 30px;
+      margin: auto;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #34495e;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    select:focus, input:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      font-size: 16px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f1f9ff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Use Case Table Generator</h1>
+
+  <div class="container">
+    <label for="useCaseSelect">Select Use Case:</label>
+    <select id="useCaseSelect">
+      <option value="User Management">User Management</option>
+      <option value="Account Management">Account Management</option>
+      <option value="Visit Management">Visit Management</option>
+      <option value="Contact Management">Contact Management</option>
+      <option value="Opportunity Management">Opportunity Management</option>
+      <option value="Opportunity Line-Item Management">Opportunity Line-Item Management</option>
+      <option value="Expense Management">Expense Management</option>
+      <option value="Product and Pricebook Management">Product and Pricebook Management</option>
+      <option value="Report and Dashboard Management">Report and Dashboard Management</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <input type="text" id="otherUseCase" placeholder="Enter custom use case" style="display:none;" />
+
+    <button onclick="addUseCase()">Submit</button>
+    <button onclick="generateDoc()">Export to DOC</button>
+
+    <table id="useCaseTable">
+      <thead>
+        <tr>
+          <th>Use Case ID</th>
+          <th>Use Case Name</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="docx.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

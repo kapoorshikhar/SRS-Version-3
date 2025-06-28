@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Use Case Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    form {
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+    .multi-input input {
+      margin-bottom: 5px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 8px 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    td, th {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Use Case Form</h2>
+<form id="useCaseForm">
+  <label for="useCaseId">Use Case ID</label>
+  <input type="text" id="useCaseId" name="useCaseId" required />
+
+  <label for="useCaseName">Use Case Name</label>
+  <input type="text" id="useCaseName" name="useCaseName" required />
+
+  <label for="actors">Actors</label>
+  <input type="text" id="actors" name="actors" required />
+
+  <label for="description">Description</label>
+  <textarea id="description" name="description"></textarea>
+
+  <label for="assumption">Assumption</label>
+  <textarea id="assumption" name="assumption"></textarea>
+
+  <label for="preCondition">Pre-Condition</label>
+  <textarea id="preCondition" name="preCondition"></textarea>
+
+  <label for="normalFlow">Normal Flow</label>
+  <input type="text" id="normalFlow" name="normalFlow" />
+
+  <label>Fields</label>
+  <div id="fieldsContainer" class="multi-input">
+    <input type="text" name="fields[]" />
+  </div>
+  <button type="button" onclick="addField()">Add Field</button><br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<div id="resultTableContainer"></div>
+
+<script>
+  function addField() {
+    const container = document.getElementById("fieldsContainer");
+    const input = document.createElement("input");
+    input.type = "text";
+    input.name = "fields[]";
+    container.appendChild(input);
+  }
+
+  document.getElementById("useCaseForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const fields = formData.getAll("fields[]");
+
+    const resultHTML = `
+      <h3>Submitted Use Case</h3>
+      <table>
+        <tr><th>Use Case ID</th><td>${formData.get("useCaseId")}</td></tr>
+        <tr><th>Use Case Name</th><td>${formData.get("useCaseName")}</td></tr>
+        <tr><th>Actors</th><td>${formData.get("actors")}</td></tr>
+        <tr><th>Description</th><td>${formData.get("description")}</td></tr>
+        <tr><th>Assumption</th><td>${formData.get("assumption")}</td></tr>
+        <tr><th>Pre-Condition</th><td>${formData.get("preCondition")}</td></tr>
+        <tr><th>Normal Flow</th><td>${formData.get("normalFlow")}</td></tr>
+        <tr>
+          <th>Fields</th>
+          <td><ul>${fields.map(field => `<li>${field}</li>`).join('')}</ul></td>
+        </tr>
+      </table>
+    `;
+
+    document.getElementById("resultTableContainer").innerHTML = resultHTML;
+  });
+</script>
+
+</body>
+</html>
