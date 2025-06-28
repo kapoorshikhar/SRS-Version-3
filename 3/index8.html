@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Use Case Form</title>
+  <style>
+
+  body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+  color: #333;
+  padding: 40px;
+  line-height: 1.6;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+form {
+  max-width: 800px;
+  margin: 0 auto 50px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 20px;
+  color: #34495e;
+}
+
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.field-group {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.sub-fields {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.sub-fields input {
+  margin-bottom: 8px;
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  margin-top: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  margin-top: 30px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f0f2f5;
+  font-weight: 600;
+}
+
+ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+h3 {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #e62a2a;
+  padding-bottom: 5px;
+  color: #538bc4;
+}
+
+  </style>
+</head>
+<body>
+
+  <h2>Use Case Form</h2>
+  <form id="useCaseForm">
+
+    <!-- Use Case ID -->
+    <label for="useCaseIdSelect">Use Case ID</label>
+    <select id="useCaseIdSelect" name="useCaseIdSelect" onchange="toggleInputField(this, 'customUseCaseId')">
+      <option value="">--Select--</option>
+      <option value="UC-001">UC-001</option>
+      <option value="UC-002">UC-002</option>
+      <option value="UC-003">UC-003</option>
+      <option value="UC-004">UC-004</option>
+      <option value="UC-005">UC-005</option>
+      <option value="UC-006">UC-006</option>
+      <option value="UC-007">UC-007</option>
+      <option value="UC-008">UC-008</option>
+      <option value="UC-009">UC-009</option>
+      <option value="UC-010">UC-010</option>
+      <option value="Other">Other</option>
+      <option value="UC-011">UC-011</option>
+      <option value="UC-012">UC-012</option>
+    </select>
+    <input type="text" id="customUseCaseId" name="customUseCaseId" placeholder="Enter Use Case ID" style="display:none; margin-top: 10px;" />
+
+    <!-- Use Case Name -->
+    <label for="useCaseNameSelect">Use Case Name</label>
+    <select id="useCaseNameSelect" name="useCaseNameSelect" onchange="toggleInputField(this, 'customUseCaseName')">
+      <option value="">--Select--</option>
+      <option value="Account Management">Account Management</option>
+      <option value="Contact Management">Contact Management</option>
+      <option value="Opportunity Management">Opportunity Management</option>
+      <option value="Opportunity Line-item Management">Opportunity Line-item Management</option>
+      <option value="Qoutation Management">Qoutation Management</option>
+      <option value="Price Management">Price Management</option>
+      <option value="Product Management">Product  Management</option>
+      <option value="Expense Management">Expense Management</option>
+      <option value="Visit Management"> Management</option>
+      <option value="Other">Other</option>
+    </select>
+    <input type="text" id="customUseCaseName" name="customUseCaseName" placeholder="Enter Use Case Name" style="display:none; margin-top: 10px;" />
+
+    <!-- Actors -->
+    <label for="actorsSelect">Actors</label>
+    <select id="actorsSelect" name="actorsSelect" multiple>
+      <option value="Admin">Admin System</option>
+      <option value="User">Sales User</option>
+      <option value="RM">RM</option>
+      <option value="Other">Other</option>
+    </select>
+    <input type="text" id="customActors" name="customActors" placeholder="Enter Custom Actor" style="display:none; margin-top: 10px;" />
+
+    <!-- Text Areas -->
+    <label for="description">Description</label>
+    <textarea id="description" name="description"></textarea>
+
+    <label for="assumption">Assumption</label>
+    <textarea id="assumption" name="assumption"></textarea>
+
+    <label for="preCondition">Pre-Condition</label>
+    <textarea id="preCondition" name="preCondition"></textarea>
+
+    <label for="normalFlow">Normal Flow</label>
+    <input type="text" id="normalFlow" name="normalFlow" />
+
+    <!-- Optional Fields with N/A -->
+    <label for="notifications">
+      Notifications
+      <label><input type="radio" name="notificationsNA" onclick="toggleNA(this, 'notifications')" /> N/A</label>
+    </label>
+    <textarea id="notifications" name="notifications"></textarea>
+
+    <label for="Validations">
+      Validations
+      <label><input type="radio" name="ValidationsNA" onclick="toggleNA(this, 'Validations')" /> N/A</label>
+    </label>
+    <textarea id="Validations" name="Validations"></textarea>
+
+    <label for="Alternate Flow">
+      Alternate Flow
+      <label><input type="radio" name="Alternate FlowNA" onclick="toggleNA(this, 'Alternate Flow')" /> N/A</label>
+    </label>
+    <textarea id="Alternate Flow" name="Alternate Flow"></textarea>
+
+    <label for="references">
+      References
+      <label><input type="radio" name="referencesNA" onclick="toggleNA(this, 'references')" /> N/A</label>
+    </label>
+    <textarea id="references" name="references"></textarea>
+
+    <!-- Custom Fields -->
+    <label>Fields</label>
+    <div id="fieldsContainer"></div>
+    <button type="button" onclick="addField()">Add Field</button><br><br>
+
+    <!-- Form Buttons -->
+    <button type="submit">Submit</button>
+    <button type="button" onclick="resetForm()">New Table</button>
+  </form>
+
+  <!-- Results -->
+  <div id="resultTableContainer"></div>
+
+  <script>
+    const usedUseCaseIds = new Set();
+    const usedUseCaseNames = new Set();
+    const usedActors = new Set();
+
+    function toggleInputField(selectElement, inputId) {
+      const inputElement = document.getElementById(inputId);
+      inputElement.style.display = selectElement.value === "Other" ? "block" : "none";
+    }
+
+    function addField() {
+      const container = document.getElementById("fieldsContainer");
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "field-group";
+
+      const fieldInput = document.createElement("input");
+      fieldInput.type = "text";
+      fieldInput.name = "fields[]";
+      fieldInput.placeholder = "Field name";
+
+      const mandatory = document.createElement("input");
+      mandatory.type = "checkbox";
+      mandatory.className = "mandatory-checkbox";
+      mandatory.title = "Mark as Mandatory";
+
+      const picklist = document.createElement("input");
+      picklist.type = "checkbox";
+      picklist.className = "picklist-checkbox";
+      picklist.title = "Enable Picklist";
+
+      const subFieldsContainer = document.createElement("div");
+      subFieldsContainer.className = "sub-fields";
+      subFieldsContainer.style.display = "none";
+
+      const addSubFieldBtn = document.createElement("button");
+      addSubFieldBtn.type = "button";
+      addSubFieldBtn.textContent = "Add Sub Field";
+      addSubFieldBtn.style.marginTop = "5px";
+      addSubFieldBtn.onclick = () => {
+        const subInput = document.createElement("input");
+        subInput.type = "text";
+        subInput.placeholder = "Sub field value";
+        subFieldsContainer.appendChild(subInput);
+      };
+
+      picklist.addEventListener("change", () => {
+        if (picklist.checked) {
+          subFieldsContainer.innerHTML = "";
+          subFieldsContainer.style.display = "block";
+          subFieldsContainer.appendChild(addSubFieldBtn);
+          addSubFieldBtn.click();
+        } else {
+          subFieldsContainer.innerHTML = "";
+          subFieldsContainer.style.display = "none";
+        }
+      });
+
+      wrapper.appendChild(fieldInput);
+      wrapper.appendChild(document.createTextNode(" Mandatory "));
+      wrapper.appendChild(mandatory);
+      wrapper.appendChild(document.createTextNode(" Picklist "));
+      wrapper.appendChild(picklist);
+      wrapper.appendChild(subFieldsContainer);
+
+      container.appendChild(wrapper);
+    }
+
+    document.getElementById("useCaseForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+
+      let useCaseId = formData.get("useCaseIdSelect");
+      if (useCaseId === "Other") useCaseId = formData.get("customUseCaseId") || "Custom-ID";
+      if (usedUseCaseIds.has(useCaseId)) {
+        alert("Use Case ID already used. Please select a different one.");
+        return;
+      }
+      usedUseCaseIds.add(useCaseId);
+
+      let useCaseName = formData.get("useCaseNameSelect");
+      if (useCaseName === "Other") useCaseName = formData.get("customUseCaseName") || "Custom-Name";
+      if (usedUseCaseNames.has(useCaseName)) {
+        alert("Use Case Name already used. Please select a different one.");
+        return;
+      }
+      usedUseCaseNames.add(useCaseName);
+
+      let selectedActors = Array.from(document.getElementById("actorsSelect").selectedOptions).map(opt => opt.value);
+      if (selectedActors.includes("Other")) {
+        const customActor = formData.get("customActors") || "Custom-Actor";
+        selectedActors = selectedActors.filter(actor => actor !== "Other");
+        selectedActors.push(customActor);
+      }
+
+      const fields = [];
+      document.querySelectorAll(".field-group").forEach(group => {
+        const fieldName = group.querySelector("input[name='fields[]']").value;
+        const isMandatory = group.querySelector(".mandatory-checkbox").checked;
+        const picklistChecked = group.querySelector(".picklist-checkbox").checked;
+
+        let subFields = [];
+        if (picklistChecked) {
+          group.querySelectorAll(".sub-fields input[type='text']").forEach(input => {
+            if (input.value.trim()) subFields.push(input.value.trim());
+          });
+        }
+
+        fields.push({ name: fieldName, mandatory: isMandatory, subFields });
+      });
+
+      const tableHTML = `
+        <h3>Submitted Use Case</h3>
+        <table>
+          <tr><th>Use Case ID</th><td>${useCaseId}</td></tr>
+          <tr><th>Use Case Name</th><td>${useCaseName}</td></tr>
+          <tr><th>Actors</th><td>${selectedActors.join(', ')}</td></tr>
+          <tr><th>Description</th><td>${formData.get("description")}</td></tr>
+          <tr><th>Assumption</th><td>${formData.get("assumption")}</td></tr>
+          <tr><th>Pre-Condition</th><td>${formData.get("preCondition")}</td></tr>
+          <tr><th>Normal Flow</th><td>${formData.get("normalFlow")}</td></tr>
+          <tr>
+            <th>Fields</th>
+            <td>
+              <ul>
+                ${fields.map(field => {
+                  const label = `${field.name}${field.mandatory ? ' *' : ''}`;
+                  const subList = field.subFields.length
+                    ? `<ul>${field.subFields.map(sub => `<li>${sub}</li>`).join('')}</ul>`
+                    : '';
+                  return `<li>${label}${subList}</li>`;
+                }).join('')}
+              </ul>
+            </td>
+          </tr>
+          <tr><th>Notifications</th><td>${formData.get("notifications")}</td></tr>
+          <tr><th>Validations</th><td>${formData.get("validations")}</td></tr>
+          <tr><th>Alternate Flow</th><td>${formData.get("alternateFlow")}</td></tr>
+          <tr><th>References</th><td>${formData.get("references")}</td></tr>
+        </table>
+      `;
+
+      const resultDiv = document.createElement("div");
+      resultDiv.innerHTML = tableHTML;
+      document.getElementById("resultTableContainer").appendChild(resultDiv);
+
+      resetForm(false);
+    });
+
+    function resetForm(fullReset = true) {
+      const form = document.getElementById("useCaseForm");
+      form.reset();
+      document.getElementById("customUseCaseId").style.display = "none";
+      document.getElementById("customUseCaseName").style.display = "none";
+      document.getElementById("customActors").style.display = "none";
+      document.getElementById("fieldsContainer").innerHTML = "";
+
+      if (!fullReset) {
+        disableUsedOptions("useCaseIdSelect", usedUseCaseIds);
+        disableUsedOptions("useCaseNameSelect", usedUseCaseNames);
+        disableUsedOptions("actorsSelect", usedActors);
+      }
+    }
+
+    function disableUsedOptions(selectId, usedSet) {
+      const select = document.getElementById(selectId);
+      Array.from(select.options).forEach(opt => {
+        if (opt.value && usedSet.has(opt.value)) {
+          opt.disabled = true;
+        }
+      });
+    }
+
+    function toggleNA(radio, textareaId) {
+      const input = document.getElementById(textareaId);
+      input.value = "N/A";
+      input.disabled = radio.checked;
+    }
+  </script>
+
+</body>
+</html>
